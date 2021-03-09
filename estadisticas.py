@@ -16,7 +16,6 @@ def varianza(X):
 def desviacion_estandar(X):
     return math.sqrt(varianza(X))
 
-
 if __name__ == '__main__':
     X = [random.randint(1, 21) for i in range(20)]
     mu = media(X)
