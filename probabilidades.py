@@ -1,6 +1,7 @@
 import random
-
+import collections
 from bokeh.plotting import figure, show
+from bokeh.layouts import row
 
 def tirar_dado(numero_de_tiros):
     secuencia_de_tiros = []
@@ -9,12 +10,21 @@ def tirar_dado(numero_de_tiros):
         tiro_2 = random.choice([1, 2, 3, 4, 5, 6])
         resultado = tiro_1 + tiro_2
         secuencia_de_tiros.append(resultado)
-
-    return secuencia_de_tiros
+    
+    counter = dict(collections.Counter(secuencia_de_tiros))
+    x_val = []
+    y_val = []
+    for x in counter.keys():
+        x_val.append(x)
+    for y in counter.values():
+        y_val.append(y)
+    
+    print(x_val, y_val)
+    graficar(x_val, y_val)
 
 def graficar(x, y):
-    grafica = figure(title = 'Probabilidad de sumar 12', x_axis_label = 'número de intentos', y_axis_label = 'Probabilidad')
-    grafica.line(x,y)
+    grafica = figure(title = 'Trabajando con una muestra', x_axis_label = 'Suma de 2 dados', y_axis_label = 'Número de ocurrencias')
+    grafica.vbar(x, top = y, width = 0.5, color = "#CAB2D6")
 
     show(grafica)
 
@@ -36,11 +46,12 @@ def main(numero_de_tiros, numero_de_intentos):
     
     probabilidad_tiros_con_12 = suma_tiros_12 / numero_de_intentos
     print(f'Probabilidad de obtener una suma de 12 en {numero_de_tiros} tiros = {probabilidad_tiros_con_12}')
-    graficar(list(range(numero_de_intentos)), valores_prob)
+    # graficar(list(range(numero_de_intentos)), valores_prob)
 
 if __name__ == '__main__':
     numero_de_tiros = int(input('Cuantos tiros del dado: '))
     numero_de_intentos = int(input('Número de simulaciones: '))
     
-    main(numero_de_tiros, numero_de_intentos)
+    # main(numero_de_tiros, numero_de_intentos)
+    tirar_dado(numero_de_tiros)
 
